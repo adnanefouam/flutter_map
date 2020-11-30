@@ -241,11 +241,10 @@ class PolygonPainter extends CustomPainter {
   void paintRectangle(Canvas canvas, Size size,Offset offset) {
     var rect= offset & size/14;
 //    var paint1 = Paint()
-//
 //      ..color = Colors.white
 //      ..style = PaintingStyle.fill;
 //    canvas.drawRRect(RRect.fromRectAndRadius(rect,Radius.circular(1000)), paint1);
-    TextSpan span =  TextSpan(style: polygonOpt.parcellNumValueStyle.copyWith(fontSize:rect.size.height ),text: polygonOpt.parcelle,);
+    TextSpan span =  TextSpan(style: polygonOpt.parcellNumValueStyle);
     TextPainter tp =  TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
     tp.layout();
     tp.paint(canvas,Offset(rect.center.dx-tp.width/2,rect.center.dy-tp.height*2));
@@ -254,26 +253,17 @@ class PolygonPainter extends CustomPainter {
   }
   void _paintPolygon(Canvas canvas, Rect rect) {
     final paint = Paint();
-
     if (null != polygonOpt.holeOffsetsList) {
-
       canvas.saveLayer(rect, paint);
       paint.style = PaintingStyle.fill;
-
       for (var offsets in polygonOpt.holeOffsetsList) {
-
         var path = Path();
         path.addPolygon(offsets, true);
         canvas.drawPath(path, paint);
       }
-
       paint
         ..color = polygonOpt.color
         ..blendMode = BlendMode.srcOut;
-
-
-
-
       var path = Path();
       path.addPolygon(polygonOpt.offsets, true);
       canvas.drawPath(path, paint);
