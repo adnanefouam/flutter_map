@@ -54,14 +54,14 @@ class PolylinePage extends StatelessWidget {
 
                   PolygonLayerOptions(polygons: [
                     Polygon(
-                        parcelle: "1010101",
+                        numeroDeparcelle: '1010101',
                         parcellNumValueStyle: TextStyle(color: Colors.red,fontSize: 4),
                         borderStrokeWidth: 4,
                         points: pointsGradient,
                         color: Colors.black,
                         borderColor: Colors.blue),
                     Polygon(
-                        parcelle: "1010101",
+                        numeroDeparcelle: '1010101',
                         parcellNumValueStyle: TextStyle(color: Colors.red,fontSize: 4),
                         borderStrokeWidth: 4,
                         points: points,
@@ -69,7 +69,7 @@ class PolylinePage extends StatelessWidget {
                         borderColor: Colors.blue),
                     Polygon(
 
-                        parcelle: "1010101",
+                        numeroDeparcelle: '1010101',
                         parcellNumValueStyle: TextStyle(color: Colors.red,fontSize: 4),
                         borderStrokeWidth: 4,
                         points:pointsGradientt ,

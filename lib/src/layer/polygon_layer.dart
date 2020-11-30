@@ -28,7 +28,9 @@ class PolygonLayerOptions extends LayerOptions {
 
 class Polygon {
   final TextStyle parcellNumValueStyle;
-  final String parcelle;
+  final String numeroDeparcelle;
+  final Color numeroDeparcelleColor;
+  final String numeroDeparcelleFont;
   final List<LatLng> points;
   final List<Offset> offsets = [];
   final List<List<LatLng>> holePointsList;
@@ -42,7 +44,9 @@ class Polygon {
 
   Polygon({
     this.parcellNumValueStyle,
-    this.parcelle,
+    this.numeroDeparcelle,
+    this.numeroDeparcelleColor,
+    this.numeroDeparcelleFont,
     this.points,
     this.holePointsList,
     this.color = const Color(0xFF00FF00),
@@ -121,11 +125,7 @@ class PolygonLayer extends StatelessWidget {
                 CustomPaint(
                   painter: PolygonPainter(polygon),
                   size: size,
-
-
                 ),
-
-
               ],
             ),
           );
@@ -171,7 +171,6 @@ class PolygonPainter extends CustomPainter {
   }
 
   void _paintBorder(Canvas canvas) {
-
     if (polygonOpt.borderStrokeWidth > 0.0) {
       var borderRadius = (polygonOpt.borderStrokeWidth / 2);
 
@@ -197,13 +196,11 @@ class PolygonPainter extends CustomPainter {
         if (!polygonOpt.disableHolesBorder &&
             null != polygonOpt.holeOffsetsList) {
           for (var offsets in polygonOpt.holeOffsetsList) {
-
             _paintLine(canvas, offsets, borderRadius, borderPaint);
           }
         }
       }
     }
-
   }
 
   void _paintDottedLine(Canvas canvas, List<Offset> offsets, double radius,
@@ -226,8 +223,6 @@ class PolygonPainter extends CustomPainter {
           : distance - totalDistance;
     }
     canvas.drawCircle(offsets.last, radius, paint);
-
-
   }
 
   void _paintLine(
@@ -236,21 +231,29 @@ class PolygonPainter extends CustomPainter {
     for (var offset in offsets) {
       canvas.drawCircle(offset, radius, paint);
     }
-
   }
-  void paintRectangle(Canvas canvas, Size size,Offset offset) {
-    var rect= offset & size/14;
+
+  void paintRectangle(Canvas canvas, Size size, Offset offset) {
+    var rect = offset & size / 14;
 //    var paint1 = Paint()
 //      ..color = Colors.white
 //      ..style = PaintingStyle.fill;
 //    canvas.drawRRect(RRect.fromRectAndRadius(rect,Radius.circular(1000)), paint1);
-    TextSpan span =  TextSpan(style: polygonOpt.parcellNumValueStyle);
-    TextPainter tp =  TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
+    TextSpan span = TextSpan(
+        style: TextStyle(
+            color: polygonOpt.numeroDeparcelleColor,
+            fontFamily: polygonOpt.numeroDeparcelleFont,
+            fontSize: rect.size.height),
+        text: polygonOpt.numeroDeparcelle);
+    TextPainter tp = TextPainter(
+        text: span,
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr);
     tp.layout();
-    tp.paint(canvas,Offset(rect.center.dx-tp.width/2,rect.center.dy-tp.height*2));
-
-
+    tp.paint(canvas,
+        Offset(rect.center.dx - tp.width / 2, rect.center.dy - tp.height * 2));
   }
+
   void _paintPolygon(Canvas canvas, Rect rect) {
     final paint = Paint();
     if (null != polygonOpt.holeOffsetsList) {
@@ -270,11 +273,8 @@ class PolygonPainter extends CustomPainter {
 
       _paintBorder(canvas);
 
-
       canvas.restore();
-
     } else {
-
       paint
         ..style = PaintingStyle.fill
         ..color = polygonOpt.color;
@@ -285,6 +285,7 @@ class PolygonPainter extends CustomPainter {
       paintRectangle(canvas, path.getBounds().size, path.getBounds().center);
     }
   }
+
   @override
   bool shouldRepaint(PolygonPainter other) => false;
 
