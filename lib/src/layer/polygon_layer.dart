@@ -243,7 +243,7 @@ class PolygonPainter extends CustomPainter {
         style: TextStyle(
             color: polygonOpt.numeroDeparcelleColor,
             fontFamily: polygonOpt.numeroDeparcelleFont,
-            fontSize: rect.size.height),
+            fontSize: rect.size.height,fontWeight: FontWeight.bold),
         text: polygonOpt.numeroDeparcelle);
     TextPainter tp = TextPainter(
         text: span,
